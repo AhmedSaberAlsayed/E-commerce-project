@@ -22,17 +22,21 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
 
-        $method = $this->method();
-            if($method=='PUT'){
+        // $method = $this->method();
+        //     if($method=='PUT'){
                 return [
-                    'name' => ['required'],
-                ];
-            }else{
+                    // "name"=>'required',
+                    'name' => 'required|string',
+                ] ;
+                //[
+                  //  'name' => ['required'],
+            //     ];
+            // }else{
 
-                return [
-                    'name' => ['sometimes','required'],
-                ];
+            //     return [
+            //         'name' => ['sometimes','required'],
+                // ];
 
     }
 }
-}
+// }

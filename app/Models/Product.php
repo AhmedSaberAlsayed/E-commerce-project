@@ -15,12 +15,13 @@ class Product extends Model
 
 
     protected $fillable = [
-        'name',
+        'Product_Name',
         'description',
         'image' ,
-        'categore_id',
+        'category_id',
+        'price',
     ];
-    public function Categore(){
+    public function Category(){
         return $this->belongsTo(category::class);
     }
 
@@ -33,7 +34,7 @@ class Product extends Model
         return $this->hasMany(Favorite::class);
     }
 
-    
+
     public function getImageAttribute($value){
         return 'images/products/' .$value ;
     }

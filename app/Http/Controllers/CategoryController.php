@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Http\Traits\Api_designtrait;
 use App\Http\Filters\V1\ProductsFilter;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use Illuminate\Http\Request;
 
 
 
@@ -17,10 +17,10 @@ class CategoryController extends Controller
 {
     use Api_designtrait;
 
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum','Admin'])->except('index');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum','Admin'])->except('index');
+    // }
     public function index( Request $request)
     {
         $filter = new ProductsFilter();
@@ -53,10 +53,12 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $Category)
+    public function update(UpdateCategoryRequest $request,$id)
     {
-       $update= $Category->update($request->all());
-        return $this->api_design(200,'Category update success',$update,);
+        $update=Category::find($id);
+        $update->update($request->all());
+        
+        return $this->api_design(200,'Category update success',$update);
     }
 
     /**

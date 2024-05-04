@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Http\Resources\CartResource;
+use App\Http\Traits\Api_designtrait;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
-use App\Http\Resources\CartResource;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Traits\Api_designtrait;
 
 
 class CartController extends Controller
@@ -29,7 +29,7 @@ class CartController extends Controller
     {
         $user= Auth::user();
         $store= new CartResource(Cart::create([
-            'user_id'=>$user->id,
+            'user_id'=>Auth::id(),
             'product_id'=>$request->product_id,
             'quantity'=>$request->quantity,
             'price'=>$request->price,

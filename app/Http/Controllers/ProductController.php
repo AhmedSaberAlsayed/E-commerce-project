@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Traits\ImagesTrait;
+use App\Http\Traits\Api_designtrait;
 use App\Http\Filters\V1\ProductsFilter;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductCollection;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Http\Traits\Api_designtrait;
-use App\Http\Traits\ImagesTrait;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum','Admin'])->except('index');
-    }
+    // public function __construct()
+    // {
+    //     // $this->middleware(['auth:sanctum','Admin'])->except('index');
+    // }
     use Api_designtrait;
     use ImagesTrait;
     /**
@@ -40,9 +40,10 @@ class ProductController extends Controller
         $fileName= time() . '.' . $request->image->extension();
         $this->uploadimg($request->image, $fileName, 'products');
         $product=product::create([
-            'name'=> $request->name,
+            'Product_Name'=> $request->Product_Name,
             'description'=> $request->description,
-            'categore_id'=> $request->categore_id,
+            'price'=> $request->price,
+            'category_id'=> $request->category_id,
             'image'=> $fileName,
         ]);
         return $this->api_design(200,'product add success',$product);
@@ -60,17 +61,27 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, product $product )
     {
+        // $product=Product::find($id);
+        // dd($product);
+        // $product->update($request->all());
+        // dd($product->id);
+
+    // dd($request);
         $fileName= time() . $request->image->extension();
-    $this->uploadimg($request->image, $fileName, 'products');
+        $this->uploadimg( $request->image , $fileName , 'products', $product->image );
     $update= $product->update([
-            'name'=> $request->name,
+            'Product_Name'=> $request->Product_Name,
             'description'=> $request->description,
-            'categore_id'=> $request->categore_id,
+            'price'=> $request->price,
+            'category_id'=> $request->category_id,
             'image'=> $fileName,
         ]);
-        return $this->api_design(200,'product updated success',$update);
+        // return $this->api_design(200,'product updated success',$update);
+        // dd( request()->request);
+        // $update= $product->update($request->all());
+        return $this->api_design(200,'Product update success',$update,);
     }
     /**
      * Remove the specified resource from storage.

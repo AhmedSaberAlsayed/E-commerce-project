@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('Product_Name');
             $table->string('description');
             $table->string('image');
-            $table->unsignedBigInteger('categore_id');
-            $table->foreign('categore_id')->references('id')->on('categores')->onDelete('cascade');
+            $table->double('price');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categores')->onDelete('cascade');
             $table->timestamps();
         });
     }

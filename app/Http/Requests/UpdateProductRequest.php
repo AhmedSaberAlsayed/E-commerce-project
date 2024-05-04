@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\Categore;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -23,14 +23,12 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method = $this->method();
-
 
             return [
-                'name' => ['required'],
-                'description' => ['required'],
-                'image' => ['required'],
-                'categore_id' => ['required',],
+                'name' => 'required',
+                'description' => 'required',
+                'image' => 'required',
+                'category_id' => 'required',
             ];
         }
     }
