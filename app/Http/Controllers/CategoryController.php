@@ -23,10 +23,14 @@ class CategoryController extends Controller
     // }
     public function index( Request $request)
     {
-        $filter = new ProductsFilter();
-        $fillterItems = $filter->transform($request); //[['column', 'operator', 'value']]
-        $categories = Category::where($fillterItems);
-        return new CategoryCollection($categories->paginate()->appends($request->query()));
+        $categories= Category::all(['id','Category_Name']);
+        return $this->api_design(200,'All Categories',$categories);
+
+
+        // $filter = new ProductsFilter();
+        // $fillterItems = $filter->transform($request); //[['column', 'operator', 'value']]
+        // $categories = Category::where($fillterItems);
+        // return new CategoryCollection($categories->paginate()->appends($request->query()));
     }
 
 
@@ -57,7 +61,7 @@ class CategoryController extends Controller
     {
         $update=Category::find($id);
         $update->update($request->all());
-        
+
         return $this->api_design(200,'Category update success',$update);
     }
 
