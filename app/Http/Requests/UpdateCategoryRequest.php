@@ -26,7 +26,7 @@ class UpdateCategoryRequest extends FormRequest
         //     if($method=='PUT'){
                 return [
                     // "name"=>'required',
-                    'name' => 'required|string',
+                    'Category_Name' => 'required|string',
                 ] ;
                 //[
                   //  'name' => ['required'],

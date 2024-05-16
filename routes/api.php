@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FlavorController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PillController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductFlavourController;
-use App\Http\Controllers\ProductFlavourSizeController;
-use App\Http\Controllers\SizeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PillController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\FlavorController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProductFlavourController;
+use App\Http\Controllers\ProductFlavourSizeController;
+use App\Http\Controllers\Admin\AdminstrationController;
 
 
 
@@ -27,4 +28,6 @@ Route::apiResource('ProductFlavour', ProductFlavourController::class);
 Route::apiResource('order', OrderController::class)->middleware('auth:sanctum');
 Route::apiResource('pill', PillController::class)->middleware('auth:sanctum');
 Route::apiResource('user', AuthController::class);
-Route::post('register',[AuthController::class, 'register']);
+Route::post('register/user',[AuthController::class, 'register']);
+Route::apiResource('admin', AdminstrationController::class);
+Route::post('register/admin',[AdminstrationController::class, 'register']);

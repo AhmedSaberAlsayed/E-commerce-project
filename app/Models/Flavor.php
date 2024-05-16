@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Flavor extends Model
 {
@@ -13,14 +14,12 @@ class Flavor extends Model
         'flavor_name',
     ];
 
-    public function productflavorSize(){
-        return $this->hasMany(product_flavour_size::class,'flavors_id');
+
+
+
+
+    public function Products():HasMany
+    {
+        return $this->hasMany(Product::class);
     }
-
-
-
-    // public function Product()
-    // {
-    //     return $this->hasMany(Product::class);
-    // }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Updateproduct_flavourRequest extends FormRequest
+class AdminstrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class Updateproduct_flavourRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "product_id"=> 'required|exists:products,id',
-            "flavor_id"=> 'required|exists:flavors,id',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:adminstrations'],
+            'password' => ['required','min:8',],
         ];
     }
 }

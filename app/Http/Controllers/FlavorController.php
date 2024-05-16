@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\Api_designtrait;
 use App\Models\flavor;
 use Illuminate\Http\Request;
+use App\Http\Traits\Api_designtrait;
+use App\Http\Resources\FlavorResource;
 use App\Http\Filters\V1\ProductsFilter;
 use App\Http\Resources\FlavorCollection;
 use App\Http\Requests\StoreflavorRequest;
 use App\Http\Requests\UpdateflavorRequest;
-use App\Http\Resources\FlavorResource;
 
 class flavorController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum','Admin'])->except('index');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum','Admin'])->except('index');
+    // }
     use Api_designtrait;
 
     /**
@@ -36,7 +36,9 @@ class flavorController extends Controller
      */
     public function store(StoreflavorRequest $request)
     {
-        $store= new FlavorResource(flavor::create($request->all()));
+        $store= new FlavorResource(flavor::create([
+            "flavor_name"=>$request->flavor_name,
+        ]));
         return $this->api_design(200,'flavor add success',$store);
     }
 
@@ -54,7 +56,9 @@ class flavorController extends Controller
      */
     public function update(UpdateflavorRequest $request, flavor $flavor)
     {
-        $update= $flavor->update($request->all());
+        $update= $flavor->update([
+            "flavorName"=>$request->flavorName,
+        ]);
         return $this->api_design(200,'flavor update success',$update,);
 
     }

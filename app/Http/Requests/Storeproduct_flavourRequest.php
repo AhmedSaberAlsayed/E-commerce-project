@@ -22,7 +22,9 @@ class Storeproduct_flavourRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'Quantity' =>"required",
+            'flavor_id' =>"required",
+            'product_id' =>"required",
         ];
     }
 }

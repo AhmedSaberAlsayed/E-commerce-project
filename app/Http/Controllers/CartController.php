@@ -12,10 +12,10 @@ use App\Http\Requests\UpdateCartRequest;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum','Admin'])->except('index');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum'])->except('index');
+    // }
 
     use Api_designtrait;
 
@@ -27,13 +27,11 @@ class CartController extends Controller
 
     public function store(StoreCartRequest $request)
     {
-        $user= Auth::user();
         $store= new CartResource(Cart::create([
-            'user_id'=>Auth::id(),
+           'user_id'=>$request->user_id,
             'product_id'=>$request->product_id,
             'quantity'=>$request->quantity,
-            'price'=>$request->price,
-            'product_title'=>$request->product_title,
+            'Total_Price'=>$request->Total_Price,
         ]));
         return $this->api_design(200,'Cart add success',$store);
     }
@@ -51,15 +49,16 @@ class CartController extends Controller
             'user_id'=>Auth::id(),
             'product_id'=>$request->product_id,
             'quantity'=>$request->quantity,
-            'price'=>$request->price,
-            'product_title'=>$request->product_title,
+            'Total_Price'=>$request->Total_Price,
         ]));
         return $this->api_design(200,'Cart update success',$update);
     }
 
     public function destroy(Cart $cart)
     {
-        //
+        $record = new CartResource($cart);
+        $record->delete();
+    return $this->api_design(200,'cart delete success',$record);
     }
 }
 /**

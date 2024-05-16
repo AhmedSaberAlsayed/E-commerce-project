@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\product_flavour;
+use App\Http\Traits\Api_designtrait;
 use App\Http\Filters\V1\ProductsFilter;
+use App\Http\Resources\product_flavourResource;
+use App\Http\Resources\product_flavourCollection;
 use App\Http\Requests\Storeproduct_flavourRequest;
 use App\Http\Requests\Updateproduct_flavourRequest;
-use App\Http\Resources\product_flavourCollection;
-use App\Http\Resources\product_flavourResource;
-use App\Models\product_flavour;
-use Illuminate\Http\Request;
 
 class ProductFlavourController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth:sanctum','Admin'])->except('index');
-    }
+    use Api_designtrait;
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth:sanctum','Admin'])->except('index');
+    // }
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +36,12 @@ class ProductFlavourController extends Controller
      */
     public function store(Storeproduct_flavourRequest $request)
     {
-        $store= new product_flavourResource(product_flavour::create($request->all()));
+        $store= new product_flavourResource(product_flavour::create([
+            "product_id"=> $request->product_id,
+            "flavor_id"=> $request->flavor_id,
+            "Quantity"=> $request->Quantity,
+
+        ]));
         return $this->api_design(200,'product_flavour add success',$store);
     }
 
@@ -52,7 +59,10 @@ class ProductFlavourController extends Controller
      */
     public function update(Updateproduct_flavourRequest $request, product_flavour $product_flavour)
     {
-        $update= $product_flavour->update($request->all());
+        $update= $product_flavour->update([
+            "product_id"=> $request->product_id,
+            "flavor_id"=> $request->flavor_id
+        ]);
         return $this->api_design(200,'product_flavour update success',$update,);
     }
 

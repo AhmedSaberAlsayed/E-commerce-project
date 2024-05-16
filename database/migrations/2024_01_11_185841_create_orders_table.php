@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('quantity');
-            $table->double('price');
-            $table->string('payment_method');
-            $table->enum('payment_status',['pednding','done'])->default('pednding');
-            $table->string('product_title');
-            $table->dateTime('TransactionID');
+            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('c_o_d_s_id');
+            $table->date('order_date');
+            $table->string('payment_method')->default('cash on delivery');
+            $table->enum('payment_status',['pednding','done'])->default('pednding'); 
+            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->foreign('c_o_d_s_id')->references('id')->on('c_o_d_s')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InvoiceResource extends JsonResource
+class AdminstrationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,11 @@ class InvoiceResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'customerId' => $this->customer_id,
-            'amount' => $this->amount,
-            'status' => $this->status,
-            'billedDate' => $this->billed_date,
-            'paidDate' => $this->paid_date,
-            ];
+            'id'=> $this->id,
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'password'=>$this->password,
+            'role'=>$this->role,
+        ];
     }
 }

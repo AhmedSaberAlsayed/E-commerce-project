@@ -43,9 +43,13 @@ class ProductController extends Controller
             'Product_Name'=> $request->Product_Name,
             'description'=> $request->description,
             'price'=> $request->price,
+            'size'=> $request->size,
+            'quantity'=> $request->quantity,
             'category_id'=> $request->category_id,
             'image'=> $fileName,
+            'flavors'=> $request->flavors
         ]);
+        $product->Flavors()->attach($request->flavors);
         return $this->api_design(200,'product add success',$product);
     }
 
@@ -63,24 +67,18 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, product $product )
     {
-        // $product=Product::find($id);
-        // dd($product);
-        // $product->update($request->all());
-        // dd($product->id);
-
-    // dd($request);
         $fileName= time() . $request->image->extension();
         $this->uploadimg( $request->image , $fileName , 'products', $product->image );
     $update= $product->update([
             'Product_Name'=> $request->Product_Name,
             'description'=> $request->description,
             'price'=> $request->price,
+            'size'=> $request->size,
+            'quantity'=> $request->quantity,
             'category_id'=> $request->category_id,
             'image'=> $fileName,
         ]);
-        // return $this->api_design(200,'product updated success',$update);
-        // dd( request()->request);
-        // $update= $product->update($request->all());
+        $product->Flavors()->attach($request->flavors);
         return $this->api_design(200,'Product update success',$update,);
     }
     /**

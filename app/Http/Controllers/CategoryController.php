@@ -39,7 +39,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $store= new CategoryResource(Category::create($request->all()));
+        $store= new CategoryResource(Category::create([
+            "Category_Name"=>$request->Category_Name,
+        ]));
         return $this->api_design(200,'Category add success',$store);
 
     }
@@ -60,7 +62,9 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request,$id)
     {
         $update=Category::find($id);
-        $update->update($request->all());
+        $update->update([
+            "Category_Name"=>$request->Category_Name,
+        ]);
 
         return $this->api_design(200,'Category update success',$update);
     }

@@ -7,6 +7,7 @@ use App\Models\Size;
 use App\Models\Favorite;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -20,14 +21,20 @@ class Product extends Model
         'image' ,
         'category_id',
         'price',
+        'size',
+        'quantity',
     ];
     public function Category(){
         return $this->belongsTo(category::class);
     }
+    public function Flavors():BelongsToMany
+    {
+        return $this->belongsToMany(Flavor::class);
+    }
 
     public function Cart()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasMany(Cart::class,'product_id');
     }
     public function Favorite()
     {

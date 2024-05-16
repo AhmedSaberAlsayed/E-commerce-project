@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\registerRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Http\Traits\Api_designtrait;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Auth\registerRequest;
 
 
 class AuthController extends Controller
@@ -30,6 +32,8 @@ class AuthController extends Controller
         $user= User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'Address' => $request->Address,
+            'Phone_Number' => $request->Phone_Number,
             'password' => Hash::make($request->password),
         ]);
         return $this->api_design(200,'user add success',$user);
@@ -54,32 +58,37 @@ class AuthController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $show=new UserResource($user);
+        return $this->api_design(200,'Select user ',$show);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'Address' => $request->Address,
+            'Phone_Number' => $request->Phone_Number,
+            'password' => Hash::make($request->password),
+        ]);
+        return $this->api_design(200,'user update success',$user);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $record = new UserResource($user);
+        $record->delete();
+    return $this->api_design(200,'User delete success',$record,);
     }
 }
